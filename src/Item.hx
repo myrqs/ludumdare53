@@ -12,9 +12,6 @@ class Item extends Anim{
 
   public function new(s2d:Scene){
     super(animationTiles, 10, s2d);
-    if(hxd.res.Sound.supportedFormat(Wav)){
-      pickupSound = Res.sound.Pickup3;
-    }
   }
 
   override function sync(ctx:RenderContext) {
@@ -49,6 +46,9 @@ class Pizza extends Item{
 class Cheese extends Item{
   public function new(s2d:Scene, x:Float, y:Float){
     super(s2d);
+    if(hxd.res.Sound.supportedFormat(Wav)){
+      pickupSound = Res.sound.Pickup3;
+    }
     this.x = x;
     this.y = y;
     animationTiles.push(Res.items.cheese.toTile());
@@ -62,6 +62,9 @@ class Cheese extends Item{
 class Sauce extends Item{
   public function new(s2d:Scene, x:Float, y:Float){
     super(s2d);
+    if(hxd.res.Sound.supportedFormat(Wav)){
+      pickupSound = Res.sound.Pickup4;
+    }
     this.x = x;
     this.y = y;
     animationTiles.push(Res.items.sauce.toTile());
@@ -75,6 +78,9 @@ class Sauce extends Item{
 class Dough extends Item{
   public function new(s2d:Scene, x:Float, y:Float){
     super(s2d);
+    if(hxd.res.Sound.supportedFormat(Wav)){
+      pickupSound = Res.sound.Pickup5;
+    }
     this.x = x;
     this.y = y;
     animationTiles.push(Res.items.dough.toTile());
