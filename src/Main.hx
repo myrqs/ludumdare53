@@ -1,4 +1,5 @@
 import Item.Cheese;
+import Item.Sauce;
 import h2d.Console;
 import hxd.Res;
 import h2d.SpriteBatch;
@@ -17,6 +18,7 @@ class Main extends hxd.App {
   var nextDelivery:String = "home";
   var deliveryTarget:Planet = null;
   var cheeseCount:Int = 0;
+  var sauceCount:Int = 0;
   var arrow:Bitmap;
   var console:Console;
 
@@ -26,13 +28,13 @@ class Main extends hxd.App {
     font = hxd.res.DefaultFont.get();
 
 		s2d.scaleMode = Zoom(2.0);
-    var pizzas = [new Pizza(s2d, 10, 5),new Pizza(s2d, 64, 25), new Pizza(s2d, 128, 25)];
     player = new Player(s2d, -512, -512);
     tf = new h2d.Text(font, s2d);
     tf.textAlign = Center;
 
     planets.push(new CheesePlanet(s2d, 512, 512));
     planets.push(new Earth(s2d, 1024, 1024));
+    planets.push(new SaucePlanet(s2d,-1024, -2048));
     deliveryTarget = planets[0];
     s2d.camera.follow = player;
 		s2d.camera.anchorY = 0.5;
@@ -82,12 +84,13 @@ class Main extends hxd.App {
         if(item.getBounds().intersects(player.getBounds())){
           item.onPickup();
           if(item is Cheese) cheeseCount++;
+          if(item is Sauce) sauceCount++;
           planet.getItems().remove(item);
         }
       }
     }
     player.applyForce(forceX, forceY);
-    tf.text = "Target: " + deliveryTarget.getName() + "\ncheese: " + cheeseCount;
+    tf.text = "Target: " + deliveryTarget.getName() + "\ncheese: " + cheeseCount + "\nsauce: " + sauceCount;
     if(hxd.Key.isPressed(hxd.Key.TAB)){
       var nextPlanetIndex = planets.indexOf(deliveryTarget) + 1;
       if(nextPlanetIndex >= planets.length) nextPlanetIndex = 0;

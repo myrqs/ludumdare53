@@ -1,5 +1,6 @@
 import h2d.col.Point;
 import Item.Cheese;
+import Item.Sauce;
 import h2d.col.Circle;
 import hxd.Res;
 import h2d.Anim;
@@ -61,7 +62,7 @@ class CheesePlanet extends Planet{
       tile.dx = -tile.width/2;
       tile.dy = -tile.height/2;
     }
-    planetName = "CheesePlanet";
+    planetName = "Cheese Planet";
   }
   public override function dropItem(s2d:Scene){
     spawnCountdown = 100;
@@ -88,5 +89,39 @@ class Earth extends Planet{
       tile.dy = -tile.height/2;
     }
     planetName = "Earth";
+  }
+}
+
+class SaucePlanet extends Planet{
+  public function new(s2d:Scene, x:Float, y:Float){
+    super(s2d);
+    this.x = x;
+    this.y = y;
+    this.field = 1250;
+    this.mass = 5.0;
+    this.rotationSpeed = 0.001;
+    animtiles.push(Res.planets.sauceplanet1.toTile());
+    animtiles.push(Res.planets.sauceplanet2.toTile());
+    animtiles.push(Res.planets.sauceplanet3.toTile());
+    animtiles.push(Res.planets.sauceplanet4.toTile());
+    animtiles.push(Res.planets.sauceplanet5.toTile());
+    animtiles.push(Res.planets.sauceplanet6.toTile());
+    animtiles.push(Res.planets.sauceplanet7.toTile());
+    animtiles.push(Res.planets.sauceplanet8.toTile());
+    collisionCircle = new Circle(this.x, this.y, animtiles[0].width/2);
+    for (tile in animtiles){
+      tile.dx = -tile.width/2;
+      tile.dy = -tile.height/2;
+    }
+    planetName = "Sauce Planet";
+  }
+
+  public override function dropItem(s2d:Scene){
+    spawnCountdown = 100;
+    var dropx:Float = this.x + Math.random() * (128*2) - 128;
+    var dropy:Float = this.y + Math.random() * (128*2) - 128;
+    if(!collisionCircle.contains(new Point(dropx, dropy))){
+      items.push(new Sauce(s2d, dropx, dropy));
+    }
   }
 }
