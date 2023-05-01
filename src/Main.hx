@@ -33,6 +33,7 @@ class Main extends hxd.App {
   var coinSound:Sound = null;
   var started:Bool = false;
   var playerText:Text = null;
+  var bakeSound:Sound = null;
 
   function start() {
 
@@ -74,6 +75,7 @@ class Main extends hxd.App {
 
 		if (hxd.res.Sound.supportedFormat(Wav)) {
       coinSound = hxd.Res.sound.coin;
+      bakeSound = hxd.Res.sound.powerup1;
     }
     font = hxd.res.DefaultFont.get();
   }
@@ -197,6 +199,7 @@ class Main extends hxd.App {
       sauceCount--;
       cheeseCount--;
       pizzaCount++;
+      bakeSound.play();
     }
   }
   private function deliver(){
