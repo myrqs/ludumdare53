@@ -16,6 +16,7 @@ class Main extends hxd.App {
   var planets:Array<Planet> = [];
   var font:Font = null;
   var tf:Text = null;
+  var distanceText:Text = null;
   var nextDelivery:String = "home";
   var deliveryTarget:Planet = null;
   var cheeseCount:Int = 0;
@@ -52,6 +53,12 @@ class Main extends hxd.App {
     }
 
     arrow = new Bitmap(hxd.Res.arrow.toTile(), s2d);
+
+    distanceText = new h2d.Text(font, arrow);
+    distanceText.textAlign = Center;
+    distanceText.scale(0.75);
+    distanceText.x = -32;
+    distanceText.textColor = 0x6ABE30;
     arrow.tile.dx = -arrow.tile.width;
     arrow.tile.dy = -arrow.tile.height/2;
   }
@@ -65,6 +72,8 @@ class Main extends hxd.App {
     var dx = arrow.getBounds().getCenter().x - deliveryTarget.getBounds().getCenter().x;
     var dy = arrow.getBounds().getCenter().y - deliveryTarget.getBounds().getCenter().y;
     arrow.rotation = Math.atan2(dy, dx);
+    distanceText.text = "" + Math.round(Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2)));
+    distanceText.rotation = 1.5;
     arrow.x = player.x;
     arrow.y = player.y;
 
