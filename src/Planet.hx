@@ -153,3 +153,24 @@ class DoughPlanet extends Planet{
     }
   }
 }
+class Sun extends Planet{
+  public function new(s2d:Scene, x:Float, y:Float){
+    super(s2d);
+    this.x = x;
+    this.y = y;
+    this.field = 2048;
+    this.mass = 100.0;
+    this.rotationSpeed = 0.01;
+    animtiles.push(Res.planets.sun1.toTile());
+    animtiles.push(Res.planets.sun2.toTile());
+    animtiles.push(Res.planets.sun3.toTile());
+    animtiles.push(Res.planets.sun4.toTile());
+    animtiles.push(Res.planets.sun5.toTile());
+    collisionCircle = new Circle(this.x, this.y, animtiles[0].width/2-32);
+    for (tile in animtiles){
+      tile.dx = -tile.width/2;
+      tile.dy = -tile.height/2;
+    }
+    planetName = "Sun";
+  }
+}

@@ -38,6 +38,7 @@ class Main extends hxd.App {
     planets.push(new Earth(s2d, 1024, 1024));
     planets.push(new SaucePlanet(s2d,-1024, -2048));
     planets.push(new DoughPlanet(s2d,-2048, -1024));
+    planets.push(new Sun(s2d, 2048, 0));
     deliveryTarget = planets[0];
     s2d.camera.follow = player;
 		s2d.camera.anchorY = 0.5;
