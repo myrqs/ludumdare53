@@ -71,3 +71,16 @@ class Sauce extends Item{
     }
   }
 }
+
+class Dough extends Item{
+  public function new(s2d:Scene, x:Float, y:Float){
+    super(s2d);
+    this.x = x;
+    this.y = y;
+    animationTiles.push(Res.items.dough.toTile());
+    for (tile in animationTiles){
+      tile.dx = -tile.width/2;
+      tile.dy = -tile.height/2;
+    }
+  }
+}

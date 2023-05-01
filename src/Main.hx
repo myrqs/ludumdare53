@@ -1,5 +1,6 @@
 import Item.Cheese;
 import Item.Sauce;
+import Item.Dough;
 import h2d.Console;
 import hxd.Res;
 import h2d.SpriteBatch;
@@ -19,6 +20,7 @@ class Main extends hxd.App {
   var deliveryTarget:Planet = null;
   var cheeseCount:Int = 0;
   var sauceCount:Int = 0;
+  var doughCount:Int = 0;
   var arrow:Bitmap;
   var console:Console;
 
@@ -35,6 +37,7 @@ class Main extends hxd.App {
     planets.push(new CheesePlanet(s2d, 512, 512));
     planets.push(new Earth(s2d, 1024, 1024));
     planets.push(new SaucePlanet(s2d,-1024, -2048));
+    planets.push(new DoughPlanet(s2d,-2048, -1024));
     deliveryTarget = planets[0];
     s2d.camera.follow = player;
 		s2d.camera.anchorY = 0.5;
@@ -85,12 +88,13 @@ class Main extends hxd.App {
           item.onPickup();
           if(item is Cheese) cheeseCount++;
           if(item is Sauce) sauceCount++;
+          if(item is Dough) doughCount++;
           planet.getItems().remove(item);
         }
       }
     }
     player.applyForce(forceX, forceY);
-    tf.text = "Target: " + deliveryTarget.getName() + "\ncheese: " + cheeseCount + "\nsauce: " + sauceCount;
+    tf.text = "Target: " + deliveryTarget.getName() + "\ncheese: " + cheeseCount + "\nsauce: " + sauceCount + "\ndough: " + doughCount;
     if(hxd.Key.isPressed(hxd.Key.TAB)){
       var nextPlanetIndex = planets.indexOf(deliveryTarget) + 1;
       if(nextPlanetIndex >= planets.length) nextPlanetIndex = 0;
