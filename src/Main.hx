@@ -96,6 +96,11 @@ class Main extends hxd.App {
         if(hxd.Key.isPressed(hxd.Key.SPACE)) {
           s2d.removeChildren();
           tf = null;
+          cheeseCount = 0;
+          sauceCount = 0;
+          doughCount = 0;
+          pizzaCount = 0;
+          coinsCount = 0;
           started = false;
         }
         super.update(dt);
