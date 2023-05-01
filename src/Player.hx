@@ -20,6 +20,7 @@ class Player extends Anim{
   var thrustsound:Sound = null;
   var turbosound:Sound = null;
   var currentThrustSound:Sound = null;
+  var deathSound:Sound = null;
   var soundIsPlaying:Bool = false;
 
   public function new(s2d:Scene, x:Float, y:Float){
@@ -27,6 +28,7 @@ class Player extends Anim{
 		if (hxd.res.Sound.supportedFormat(Wav)) {
       thrustsound = hxd.Res.sound.thrust11;
       turbosound = hxd.Res.sound.turbo10;
+      deathSound = hxd.Res.sound.explosion;
     }
     this.x = x;
     this.y = y;
@@ -136,7 +138,10 @@ class Player extends Anim{
   public function die(){
     this.frames = deathAnimationTiles;
     this.onAnimEnd = function() {
+      deathSound.play(0.25);
+      thrustsound.stop();
       isDead = true;
+      remove();
     }
   }
 }
