@@ -170,7 +170,7 @@ class Main extends hxd.App {
       s2d.scaleMode = Zoom(2.5);
       s2d.camera.anchorX = 0.5;
       s2d.camera.anchorY = 0.25;
-      tf.text = "SPACE - to start\n";
+      tf.text = "SPACE - to start delivering\n";
       tf.textAlign = Center;
       tf.textColor = 0xAC3232;
       s2d.camera.follow = tf;
