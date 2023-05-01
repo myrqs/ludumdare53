@@ -1,6 +1,7 @@
 import Item.Cheese;
 import Item.Sauce;
 import Item.Dough;
+import Planet.Sun;
 import h2d.Console;
 import hxd.Res;
 import h2d.SpriteBatch;
@@ -22,8 +23,10 @@ class Main extends hxd.App {
   var cheeseCount:Int = 0;
   var sauceCount:Int = 0;
   var doughCount:Int = 0;
+  var pizzaCount:Int = 0;
   var arrow:Bitmap;
   var console:Console;
+  var bakingCounter:Int = 250;
 
   override function init(){
     super.init();
@@ -36,7 +39,7 @@ class Main extends hxd.App {
     tf.textAlign = Center;
 
     planets.push(new CheesePlanet(s2d, 512, 512));
-    planets.push(new Earth(s2d, 1024, 1024));
+    planets.push(new Earth(s2d, -1024, 1024));
     planets.push(new SaucePlanet(s2d,-1024, -2048));
     planets.push(new DoughPlanet(s2d,-2048, -1024));
     planets.push(new Sun(s2d, 2048, 0));
@@ -86,6 +89,13 @@ class Main extends hxd.App {
       if(planet.getCollisionCircle().collideBounds(player.getBounds())){
         player.die();
       }
+      if(planet is Sun){
+        if(distance <= 512){
+          if(cheeseCount >= 1 && sauceCount >= 1 && doughCount >= 1){
+            bake();
+          }
+        }
+      }
 
       if(distance < planet.getField()){
         forceX += planet.getMass() * distanceX /  Math.pow(distance, 2);
@@ -104,13 +114,23 @@ class Main extends hxd.App {
       }
     }
     player.applyForce(forceX, forceY);
-    tf.text = "Target: " + deliveryTarget.getName() + "\ncheese: " + cheeseCount + "\nsauce: " + sauceCount + "\ndough: " + doughCount;
+    tf.text = "target: " + deliveryTarget.getName() + "\ncheese: " + cheeseCount + "\nsauce: " + sauceCount + "\ndough: " + doughCount + "\npizzas: " + pizzaCount;
     if(hxd.Key.isPressed(hxd.Key.TAB)){
       var nextPlanetIndex = planets.indexOf(deliveryTarget) + 1;
       if(nextPlanetIndex >= planets.length) nextPlanetIndex = 0;
       deliveryTarget = planets[nextPlanetIndex];
     }
     //tf.text += "\nforceX: " + forceX + " forceY: " + forceY + "\naccelerationX: " + player.accelerationX + " accelerationY: " + player.accelerationY + "\nspeedX: " + player.speedX + " speedY: " + player.speedY;
+  }
+
+  private function bake(){
+    if(bakingCounter-- <= 0){
+      bakingCounter = 250;
+      doughCount--;
+      sauceCount--;
+      cheeseCount--;
+      pizzaCount++;
+    }
   }
   static function main(){
     hxd.Res.initEmbed();
