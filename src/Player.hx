@@ -13,6 +13,7 @@ class Player extends Anim{
   public var speedX:Float = 0.0;
   public var accelerationY:Float = 0.0;
   public var speedY:Float = 0.0;
+  public var isDead:Bool = false;
   var turbo:Int = 100;
   var turboOn:Bool = false;
   var weight:Float = 100.0;
@@ -133,5 +134,8 @@ class Player extends Anim{
   }
   public function die(){
     this.frames = deathAnimationTiles;
+    this.onAnimEnd = function() {
+      isDead = true;
+    }
   }
 }
