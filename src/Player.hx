@@ -110,11 +110,12 @@ class Player extends Anim{
     if(hxd.Key.isDown(hxd.Key.SPACE)){
       mine();
     }
-    if(hxd.Key.isDown(hxd.Key.SHIFT)){
+  /*
+   if(hxd.Key.isDown(hxd.Key.SHIFT)){
       turboOn = true;
       soundIsPlaying = false;
     }
-
+*/
     this.speedY += this.accelerationY;
     this.speedX += this.accelerationX;
     this.y += this.speedY;
