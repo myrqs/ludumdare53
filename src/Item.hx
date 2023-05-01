@@ -21,7 +21,7 @@ class Item extends Anim{
       scaleY -= 0.1;
       if(scaleX <= 0.1){
         remove();
-        pickupSound.play();
+        pickupSound.play(0.5);
       }
     }
   }

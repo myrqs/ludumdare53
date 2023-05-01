@@ -12,6 +12,7 @@ import h2d.Font;
 import h2d.Text;
 import h2d.Bitmap;
 import hxd.res.Sound;
+import hxd.snd.Manager;
 
 class Main extends hxd.App {
   var player:Player;
@@ -34,6 +35,7 @@ class Main extends hxd.App {
   var started:Bool = false;
   var playerText:Text = null;
   var bakeSound:Sound = null;
+  var musicResource:Sound = null;
 
   function start() {
 
@@ -76,7 +78,11 @@ class Main extends hxd.App {
 		if (hxd.res.Sound.supportedFormat(Wav)) {
       coinSound = hxd.Res.sound.coin;
       bakeSound = hxd.Res.sound.powerup1;
+      musicResource = hxd.Res.sound.track1;
     }
+		if (musicResource != null) {
+			musicResource.play(true, 0.25);
+		}
     font = hxd.res.DefaultFont.get();
   }
 
@@ -168,6 +174,12 @@ class Main extends hxd.App {
         if(nextPlanetIndex >= planets.length) nextPlanetIndex = 0;
         deliveryTarget = planets[nextPlanetIndex];
       }
+			if (hxd.Key.isPressed(hxd.Key.M)) {
+				if (Manager.get().masterVolume >= 1.0)
+					Manager.get().masterVolume = 0.0;
+				else
+					Manager.get().masterVolume = 1.0;
+			}
     }else{
       if(tf == null) {
         tf = new Text(font);
@@ -177,7 +189,7 @@ class Main extends hxd.App {
       s2d.scaleMode = Zoom(2.5);
       s2d.camera.anchorX = 0.5;
       s2d.camera.anchorY = 0.25;
-      tf.text = "SPACE - to start delivering\n";
+      tf.text = "SPACE - to start delivering\nM - to mute";
       tf.textAlign = Center;
       tf.textColor = 0xAC3232;
       s2d.camera.follow = tf;
@@ -187,6 +199,12 @@ class Main extends hxd.App {
         s2d.removeChild(tf);
         tf = null;
       }
+			if (hxd.Key.isPressed(hxd.Key.M)) {
+				if (Manager.get().masterVolume >= 1.0)
+					Manager.get().masterVolume = 0.0;
+				else
+					Manager.get().masterVolume = 1.0;
+			}
       super.update(dt);
     }
     //tf.text += "\nforceX: " + forceX + " forceY: " + forceY + "\naccelerationX: " + player.accelerationX + " accelerationY: " + player.accelerationY + "\nspeedX: " + player.speedX + " speedY: " + player.speedY;
