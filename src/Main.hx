@@ -11,6 +11,7 @@ import Player;
 import h2d.Font;
 import h2d.Text;
 import h2d.Bitmap;
+import hxd.res.Sound;
 
 class Main extends hxd.App {
   var player:Player;
@@ -24,13 +25,19 @@ class Main extends hxd.App {
   var sauceCount:Int = 0;
   var doughCount:Int = 0;
   var pizzaCount:Int = 0;
+  var coinsCount:Int = 0;
   var arrow:Bitmap;
   var console:Console;
   var bakingCounter:Int = 250;
+  var deliveryCounter:Int = 50;
+  var coinSound:Sound = null;
 
   override function init(){
     super.init();
 
+		if (hxd.res.Sound.supportedFormat(Wav)) {
+      coinSound = hxd.Res.sound.coin;
+    }
     font = hxd.res.DefaultFont.get();
 
 		s2d.scaleMode = Zoom(2.0);
@@ -96,6 +103,13 @@ class Main extends hxd.App {
           }
         }
       }
+      if(planet is Earth){
+        if(distance <= 256){
+          if(pizzaCount >= 1){
+            deliver();
+          }
+        }
+      }
 
       if(distance < planet.getField()){
         forceX += planet.getMass() * distanceX /  Math.pow(distance, 2);
@@ -114,7 +128,7 @@ class Main extends hxd.App {
       }
     }
     player.applyForce(forceX, forceY);
-    tf.text = "target: " + deliveryTarget.getName() + "\ncheese: " + cheeseCount + "\nsauce: " + sauceCount + "\ndough: " + doughCount + "\npizzas: " + pizzaCount;
+    tf.text = "target: " + deliveryTarget.getName() + "\ncheese: " + cheeseCount + "\nsauce: " + sauceCount + "\ndough: " + doughCount + "\npizzas: " + pizzaCount + "\ncoins: " + coinsCount;
     if(hxd.Key.isPressed(hxd.Key.TAB)){
       var nextPlanetIndex = planets.indexOf(deliveryTarget) + 1;
       if(nextPlanetIndex >= planets.length) nextPlanetIndex = 0;
@@ -130,6 +144,14 @@ class Main extends hxd.App {
       sauceCount--;
       cheeseCount--;
       pizzaCount++;
+    }
+  }
+  private function deliver(){
+    if(deliveryCounter-- <= 0){
+      deliveryCounter = 50;
+      pizzaCount--;
+      coinsCount++;
+      coinSound.play();
     }
   }
   static function main(){
